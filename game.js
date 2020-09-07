@@ -6,8 +6,8 @@ function init(){
 
     //Dynamically determine the size of the canvas
     //TODO revisit this
-    width = tileSize * Math.floor(window.innerWidth / tileSize);
-    height = tileSize * Math.floor(window.innerHeight / tileSize);
+    width = tileSize * Math.floor(1000/ tileSize);
+    height = tileSize * Math.floor(1000/ tileSize);
     rows = height / tileSize;
     cols = width / tileSize;
     fps = 10; //TODO let user set (difficulty/speed)
@@ -47,7 +47,7 @@ function update(directionChange) {
     }
 
     if (snake.die()) {
-        alert("GAME OVER!!!");
+        alert("GAME OVER");
         window.location.reload();
     }
 
