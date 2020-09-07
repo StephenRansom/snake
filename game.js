@@ -4,8 +4,8 @@ let width, height, tileSize, canvas, context, food, rows, cols, snake, fps, scor
 function init(){
     tileSize =20;
 
-    //Dynamically determine the size of the canvas
     //TODO revisit this
+    //maybe make it so that the tile size resizes to fit window size
     width = tileSize * Math.floor(1000/ tileSize);
     height = tileSize * Math.floor(1000/ tileSize);
     rows = height / tileSize;
@@ -46,19 +46,18 @@ function update(directionChange) {
         snake.dir(directionChange.x, directionChange.y);
     }
 
-    if (snake.die()) {
+    if (snake.isDead()) {
         alert("GAME OVER");
         window.location.reload();
     }
 
-    snake.border();
 
-    if (snake.eat()) {
+    if (snake.justAteFood()) {
         food = new Food(getSpawnLocation(), "red");
         score += 1;
     }
 
-    // Clearing the canvas for redrawing.
+    // Clear the canvas for redrawing
     context.clearRect(0, 0, width, height);
 
     food.draw();
@@ -78,7 +77,7 @@ function getSpawnLocation(){
 
 function showScore() {
     context.textAlign = "center";
-    context.font = "25px Arial";
+    context.font = "25px kongText";
     context.fillStyle = "white";
     context.fillText("SCORE: " + score, width - 120, 30);
 
@@ -86,48 +85,50 @@ function showScore() {
 
 function showPaused() {
     context.textAlign = "center";
-    context.font = "35px Arial";
+    context.font = "35px kongText";
     context.fillStyle = "white";
     context.fillText("PAUSED", width / 2, height / 2);
 }
 
 
+/********************************************************************************************************************
+******************************************Event Listeners************************************************************
+ * *****************************************************************************************************************/
 
-
-// Loading the browser window.
+// start 'er up
 window.addEventListener("load",function(){
     game();
 });
 
 
 // Adding an event listener for key presses.
-window.addEventListener("keydown", function (evt) {
-    if (evt.key === " ") {
-        evt.preventDefault();
+window.addEventListener("keydown", function (event) {
+    if (event.key === " ") {
+        event.preventDefault();
         isPaused = !isPaused;
         showPaused();
     }
-    else if (evt.key === "ArrowUp") {
-        evt.preventDefault();
+    else if (event.key === "ArrowUp") {
+        event.preventDefault();
         if (snake.velY != 1 && snake.x >= 0 && snake.x <= width && snake.y >= 0 && snake.y <= height) {
             update({x: 0, y: -1});
         }
     }
-    else if (evt.key === "ArrowDown") {
-        evt.preventDefault();
+    else if (event.key === "ArrowDown") {
+        event.preventDefault();
         if (snake.velY != -1 && snake.x >= 0 && snake.x <= width && snake.y >= 0 && snake.y <= height) {
             update({x:0,y:1});
         }
     }
-    else if (evt.key === "ArrowLeft") {
-        evt.preventDefault();
+    else if (event.key === "ArrowLeft") {
+        event.preventDefault();
         if (snake.velX != 1 && snake.x >= 0 && snake.x <= width && snake.y >= 0 && snake.y <= height) {
             update({x:-1,y:0});
 
         }
     }
-    else if (evt.key === "ArrowRight") {
-        evt.preventDefault();
+    else if (event.key === "ArrowRight") {
+        event.preventDefault();
         if (snake.velX != -1 && snake.x >= 0 && snake.x <= width && snake.y >= 0 && snake.y <= height) {
             update({x:1,y:0});
         }

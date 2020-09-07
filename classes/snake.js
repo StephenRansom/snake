@@ -50,14 +50,12 @@ class Snake {
 
     // Changing the direction of movement of the snake.
     dir(dirX, dirY) {
-
         this.velX = dirX;
         this.velY = dirY;
-
     }
 
     // Determining whether the snake has eaten a piece of food.
-    eat() {
+    justAteFood() {
         if (Math.abs(this.x - food.x) < tileSize && Math.abs(this.y - food.y) < tileSize) {
             // Adding to the tail.
             this.tail.push({});
@@ -66,23 +64,19 @@ class Snake {
         return false;
     }
 
-    // Checking if the snake has died.
-    die() {
+    // Check if the snake has has met an untimely demise.
+    isDead() {
         for (var i = 0; i < this.tail.length; i++) {
             if (Math.abs(this.x - this.tail[i].x) < tileSize && Math.abs(this.y - this.tail[i].y) < tileSize) {
                 return true;
             }
         }
-        return false;
-    }
 
-    border() {
         if (this.x + tileSize > width && this.velX != -1 || this.x < 0 && this.velX != 1)
-            this.x = width - this.x;
+            return true;
 
         else if (this.y + tileSize > height && this.velY != -1 || this.velY != 1 && this.y < 0)
-            this.y = height - this.y;
+            return true;
+        return false;
     }
-
-
 }
