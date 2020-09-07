@@ -1,0 +1,11 @@
+
+/*TODO don't use '*', wtf */
+*{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+canvas{
+    background-color: #333;
+}
